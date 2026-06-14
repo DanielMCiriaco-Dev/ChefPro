@@ -9,6 +9,7 @@ import Login from "./pages/Login.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import AdminNewRecipe from "./pages/AdminNewRecipe.jsx";
 import AdminRecipeList from "./pages/AdminRecipeList.jsx";
+import ExternalRecipe from "./pages/ExternalRecipe.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/receitas" element={<Recipes />} />
         <Route path="/receita/:id" element={<RecipeDetails />} />
+        <Route path="/sugestao" element={<ExternalRecipe />} />
         <Route path="/login" element={<Login />} />
       </Route>
 

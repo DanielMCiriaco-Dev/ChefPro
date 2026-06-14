@@ -2,16 +2,22 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext.jsx";
 
 export default function AdminRecipeList() {
-  const { receitas, removerReceita } = useAuth();
+  const { receitas, removerReceita, limparReceitas } = useAuth();
 
   return (
     <section className="admin-page">
       <div className="section-title compact">
         <h1>Receitas cadastradas</h1>
 
-        <Link className="button" to="/admin/nova">
-          Nova receita
-        </Link>
+        <div className="admin-actions">
+          <button className="button secondary" onClick={limparReceitas}>
+            Restaurar receitas iniciais
+          </button>
+
+          <Link className="button" to="/admin/nova">
+            Nova receita
+          </Link>
+        </div>
       </div>
 
       <div className="table-card">
@@ -49,6 +55,10 @@ export default function AdminRecipeList() {
             ))}
           </tbody>
         </table>
+
+        {receitas.length === 0 && (
+          <p className="empty-table">Nenhuma receita cadastrada.</p>
+        )}
       </div>
     </section>
   );

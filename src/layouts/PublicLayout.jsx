@@ -14,6 +14,7 @@ export default function PublicLayout() {
         <nav>
           <NavLink to="/">Início</NavLink>
           <NavLink to="/receitas">Receitas</NavLink>
+          <NavLink to="/sugestao">Sugestão externa</NavLink>
           <NavLink to="/admin">Admin</NavLink>
 
           {usuario ? (

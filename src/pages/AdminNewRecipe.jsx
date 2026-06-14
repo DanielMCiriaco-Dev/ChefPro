@@ -15,6 +15,7 @@ const estadoInicial = {
 
 export default function AdminNewRecipe() {
   const [formulario, setFormulario] = useState(estadoInicial);
+  const [erro, setErro] = useState("");
   const { adicionarReceita } = useAuth();
   const navigate = useNavigate();
 
@@ -23,10 +24,47 @@ export default function AdminNewRecipe() {
     setFormulario((estadoAtual) => ({ ...estadoAtual, [name]: value }));
   }
 
+  function validarFormulario() {
+    if (formulario.titulo.trim().length < 3) {
+      return "O título precisa ter pelo menos 3 caracteres.";
+    }
+
+    if (formulario.categoria.trim().length < 3) {
+      return "A categoria precisa ter pelo menos 3 caracteres.";
+    }
+
+    if (formulario.tempo.trim().length < 3) {
+      return "Informe corretamente o tempo de preparo.";
+    }
+
+    if (!formulario.imagem.trim().startsWith("http")) {
+      return "A imagem precisa ser uma URL válida, começando com http ou https.";
+    }
+
+    if (formulario.ingredientes.trim().length < 5) {
+      return "Informe pelo menos um ingrediente.";
+    }
+
+    if (formulario.preparo.trim().length < 10) {
+      return "O modo de preparo precisa ter pelo menos 10 caracteres.";
+    }
+
+    return "";
+  }
+
   function salvarReceita(event) {
     event.preventDefault();
+
+    const mensagemErro = validarFormulario();
+
+    if (mensagemErro) {
+      setErro(mensagemErro);
+      return;
+    }
+
     adicionarReceita(formulario);
     setFormulario(estadoInicial);
+    setErro("");
     navigate("/admin/lista");
   }
 
@@ -35,12 +73,15 @@ export default function AdminNewRecipe() {
       <h1>Nova receita</h1>
 
       <form className="admin-form" onSubmit={salvarReceita}>
+        {erro && <div className="error-message">{erro}</div>}
+
         <label>
           Título
           <input
             name="titulo"
             value={formulario.titulo}
             onChange={atualizarCampo}
+            placeholder="Ex: Bolo de cenoura"
             required
           />
         </label>
@@ -51,6 +92,7 @@ export default function AdminNewRecipe() {
             name="categoria"
             value={formulario.categoria}
             onChange={atualizarCampo}
+            placeholder="Ex: Sobremesa"
             required
           />
         </label>
@@ -61,6 +103,7 @@ export default function AdminNewRecipe() {
             name="tempo"
             value={formulario.tempo}
             onChange={atualizarCampo}
+            placeholder="Ex: 40 minutos"
             required
           />
         </label>
@@ -84,6 +127,7 @@ export default function AdminNewRecipe() {
             name="imagem"
             value={formulario.imagem}
             onChange={atualizarCampo}
+            placeholder="Cole a URL da imagem"
             required
           />
         </label>
@@ -95,6 +139,7 @@ export default function AdminNewRecipe() {
             value={formulario.ingredientes}
             onChange={atualizarCampo}
             rows="6"
+            placeholder="Digite um ingrediente por linha"
             required
           />
         </label>
@@ -106,6 +151,7 @@ export default function AdminNewRecipe() {
             value={formulario.preparo}
             onChange={atualizarCampo}
             rows="6"
+            placeholder="Descreva o modo de preparo da receita"
             required
           />
         </label>

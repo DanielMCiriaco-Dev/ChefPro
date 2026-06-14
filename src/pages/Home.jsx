@@ -13,13 +13,19 @@ export default function Home() {
           <span className="tag">Receitas simples e saborosas</span>
           <h1>Organize, visualize e gerencie receitas em um só lugar.</h1>
           <p>
-            ChefPro permite o usuário adicionar e ver receitas de outros usuários.
+            ChefPro permite cadastrar, consultar, listar e remover receitas,
+            utilizando React, rotas, estado, armazenamento local e consumo de API.
           </p>
 
           <div className="actions">
             <Link className="button" to="/receitas">
               Ver receitas
             </Link>
+
+            <Link className="button secondary" to="/sugestao">
+              Ver sugestão externa
+            </Link>
+
             <Link className="button secondary" to="/login">
               Entrar como administrador
             </Link>

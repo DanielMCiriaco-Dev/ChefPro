@@ -295,7 +295,7 @@ textarea {
 
 .admin-sidebar nav a.active {
   background: #10445c;
-  color: #000000;
+  color: #ffffff;
 }
 
 .admin-content {
@@ -437,4 +437,31 @@ th {
   .table-card {
     overflow-x: auto;
   }
+  .error-message {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #ffe3e3;
+  color: #8a0000;
+  font-weight: 700;
+  border: 1px solid #ffb3b3;
+}
+
+.login-info {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #eefcff;
+  color: #072355;
+  border: 1px solid #bce2e7;
+  line-height: 1.6;
+}
+
+.empty-table {
+  margin: 22px 0 0;
+  color: #000000bd;
+  font-weight: 700;
+}
+
+.admin-actions {
+  flex-wrap: wrap;
+}
 }

@@ -14,9 +14,15 @@ export default function Login() {
   function enviarFormulario(event) {
     event.preventDefault();
 
+    if (nome.trim() === "" || senha.trim() === "") {
+      setErro("Preencha usuário e senha.");
+      return;
+    }
+
     const acessoLiberado = login(nome, senha);
 
     if (acessoLiberado) {
+      setErro("");
       navigate(destino, { replace: true });
       return;
     }
@@ -31,6 +37,11 @@ export default function Login() {
         <h1>Login</h1>
         <p>Digite o usuário e a senha do administrador.</p>
 
+        <div className="login-info">
+          <strong>Usuário:</strong> admin <br />
+          <strong>Senha:</strong> 123456
+        </div>
+
         {erro && <div className="error-message">{erro}</div>}
 
         <label>
@@ -39,6 +50,7 @@ export default function Login() {
             value={nome}
             onChange={(event) => setNome(event.target.value)}
             placeholder="Digite o usuário"
+            required
           />
         </label>
 
@@ -49,6 +61,7 @@ export default function Login() {
             value={senha}
             onChange={(event) => setSenha(event.target.value)}
             placeholder="Digite a senha"
+            required
           />
         </label>
 
