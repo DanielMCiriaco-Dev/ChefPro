@@ -25,48 +25,48 @@ export default function AdminNewRecipe() {
   }
 
   function validarFormulario() {
-    if (formulario.titulo.trim().length < 3) {
-      return "O título precisa ter pelo menos 3 caracteres.";
-    }
-
-    if (formulario.categoria.trim().length < 3) {
-      return "A categoria precisa ter pelo menos 3 caracteres.";
-    }
-
-    if (formulario.tempo.trim().length < 3) {
-      return "Informe corretamente o tempo de preparo.";
-    }
-
-    if (!formulario.imagem.trim().startsWith("http")) {
-      return "A imagem precisa ser uma URL válida, começando com http ou https.";
-    }
-
-    if (formulario.ingredientes.trim().length < 5) {
-      return "Informe pelo menos um ingrediente.";
-    }
-
-    if (formulario.preparo.trim().length < 10) {
-      return "O modo de preparo precisa ter pelo menos 10 caracteres.";
-    }
-
-    return "";
+  if (!formulario.titulo.trim()) {
+    return "Informe o título da receita.";
   }
 
-  function salvarReceita(event) {
-    event.preventDefault();
-
-    const mensagemErro = validarFormulario();
-
-    if (mensagemErro) {
-      setErro(mensagemErro);
-      return;
-    }
-
-    adicionarReceita(formulario);
-    setFormulario(estadoInicial);
-    setErro("");
-    navigate("/admin/lista");
+  if (!formulario.categoria.trim()) {
+    return "Informe a categoria da receita.";
   }
+
+  if (!formulario.tempo.trim()) {
+    return "Informe o tempo de preparo.";
+  }
+
+  if (!formulario.imagem.trim()) {
+    return "Informe a URL da imagem.";
+  }
+
+  if (!formulario.ingredientes.trim()) {
+    return "Informe os ingredientes.";
+  }
+
+  if (!formulario.preparo.trim()) {
+    return "Informe o modo de preparo.";
+  }
+
+  return "";
+}
+ function salvarReceita(event) {
+  event.preventDefault();
+
+  const mensagemErro = validarFormulario();
+
+  if (mensagemErro) {
+    setErro(mensagemErro);
+    alert(mensagemErro);
+    return;
+  }
+
+  adicionarReceita(formulario);
+  setFormulario(estadoInicial);
+  setErro("");
+  navigate("/admin/lista");
+}
 
   return (
     <section className="admin-page">
