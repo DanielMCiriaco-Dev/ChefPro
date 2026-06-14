@@ -21,52 +21,76 @@ export default function AdminNewRecipe() {
 
   function atualizarCampo(event) {
     const { name, value } = event.target;
-    setFormulario((estadoAtual) => ({ ...estadoAtual, [name]: value }));
+
+    setFormulario((estadoAtual) => ({
+      ...estadoAtual,
+      [name]: value
+    }));
+  }
+
+  function atualizarImagemArquivo(event) {
+    const arquivo = event.target.files[0];
+
+    if (!arquivo) {
+      return;
+    }
+
+    const leitor = new FileReader();
+
+    leitor.onloadend = () => {
+      setFormulario((estadoAtual) => ({
+        ...estadoAtual,
+        imagem: leitor.result
+      }));
+    };
+
+    leitor.readAsDataURL(arquivo);
   }
 
   function validarFormulario() {
-  if (!formulario.titulo.trim()) {
-    return "Informe o título da receita.";
+    if (formulario.titulo.trim().length < 3) {
+      return "O título precisa ter pelo menos 3 caracteres.";
+    }
+
+    if (formulario.categoria.trim().length < 3) {
+      return "A categoria precisa ter pelo menos 3 caracteres.";
+    }
+
+    if (formulario.tempo.trim().length < 3) {
+      return "Informe corretamente o tempo de preparo.";
+    }
+
+    if (!formulario.imagem.trim()) {
+      return "Informe uma URL de imagem ou envie uma imagem do computador.";
+    }
+
+    if (formulario.ingredientes.trim().length < 5) {
+      return "Informe pelo menos um ingrediente.";
+    }
+
+    if (formulario.preparo.trim().length < 10) {
+      return "O modo de preparo precisa ter pelo menos 10 caracteres.";
+    }
+
+    return "";
   }
 
-  if (!formulario.categoria.trim()) {
-    return "Informe a categoria da receita.";
+  function salvarReceita(event) {
+    event.preventDefault();
+
+    const mensagemErro = validarFormulario();
+
+    if (mensagemErro) {
+      setErro(mensagemErro);
+      alert(mensagemErro);
+      return;
+    }
+
+    adicionarReceita(formulario);
+    setFormulario(estadoInicial);
+    setErro("");
+    navigate("/admin/lista");
   }
-
-  if (!formulario.tempo.trim()) {
-    return "Informe o tempo de preparo.";
-  }
-
-  if (!formulario.imagem.trim()) {
-    return "Informe a URL da imagem.";
-  }
-
-  if (!formulario.ingredientes.trim()) {
-    return "Informe os ingredientes.";
-  }
-
-  if (!formulario.preparo.trim()) {
-    return "Informe o modo de preparo.";
-  }
-
-  return "";
-}
- function salvarReceita(event) {
-  event.preventDefault();
-
-  const mensagemErro = validarFormulario();
-
-  if (mensagemErro) {
-    setErro(mensagemErro);
-    alert(mensagemErro);
-    return;
-  }
-
-  adicionarReceita(formulario);
-  setFormulario(estadoInicial);
-  setErro("");
-  navigate("/admin/lista");
-}
 
   return (
     <section className="admin-page">
@@ -122,15 +146,30 @@ export default function AdminNewRecipe() {
         </label>
 
         <label>
-          Imagem
+          Imagem por URL
           <input
             name="imagem"
             value={formulario.imagem}
             onChange={atualizarCampo}
-            placeholder="Cole a URL da imagem"
-            required
+            placeholder="Cole a URL direta da imagem ou envie um arquivo abaixo"
           />
         </label>
+
+        <label>
+          Ou envie uma imagem do computador
+          <input
+            type="file"
+            accept="image/*"
+            onChange={atualizarImagemArquivo}
+          />
+        </label>
+
+        {formulario.imagem && (
+          <div className="image-preview">
+            <span>Pré-visualização da imagem:</span>
+            <img src={formulario.imagem} alt="Pré-visualização da receita" />
+          </div>
+        )}
 
         <label>
           Ingredientes
