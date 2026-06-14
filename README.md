@@ -70,8 +70,6 @@ https://www.themealdb.com/api/json/v1/1/random.php
 
 Essa API retorna dados em formato JSON, que são tratados e exibidos na página de sugestão externa.
 
-Como a TheMealDB é uma API internacional, algumas informações retornadas, como título da receita, ingredientes e modo de preparo, podem aparecer em inglês. No projeto, os rótulos da interface foram mantidos em português, mas parte do conteúdo exibido depende diretamente dos dados fornecidos pela API.
-
 ## Como executar o projeto
 
 Primeiro, clone o repositório:
@@ -181,7 +179,7 @@ As principais rotas são:
 * função de remover receita;
 * função de restaurar receitas iniciais.
 
-Também utiliza LocalStorage para salvar as receitas cadastradas no navegador, permitindo que os dados permaneçam armazenados mesmo após atualizar a página.
+Também utiliza `LocalStorage` para salvar as receitas cadastradas no navegador, permitindo que os dados permaneçam armazenados mesmo após atualizar a página.
 
 ### `ProtectedRoute.jsx`
 
@@ -206,12 +204,6 @@ Esse componente utiliza Styled Components para aplicar estilização diretamente
 É o arquivo responsável por fazer a requisição externa usando Fetch API.
 
 Ele busca uma receita aleatória na API TheMealDB, manipula os dados em JSON e retorna as informações formatadas para serem exibidas na aplicação.
-
-### `styles.css`
-
-É o arquivo responsável pela estilização geral da aplicação.
-
-Nele estão definidos os estilos do layout público, painel administrativo, cards, formulários, tabelas, botões e responsividade.
 
 ## Conceitos aplicados
 
@@ -302,22 +294,15 @@ No projeto, ela busca uma receita aleatória na API TheMealDB e exibe os dados p
 
 O projeto manipula dados em formato JSON tanto no LocalStorage quanto na requisição externa feita com Fetch API.
 
-### Styled Components
-
-O projeto utiliza Styled Components no componente `ExternalRecipeCard.jsx`.
-
-Essa biblioteca permite criar componentes estilizados dentro do próprio JavaScript, facilitando a organização da interface e a reutilização de estilos.
-
 ### Validação de formulário
 
 O cadastro de receitas possui validação feita com JavaScript.
 
 O sistema verifica, por exemplo:
 
-* se o título foi preenchido corretamente;
+* se o título possui pelo menos 3 caracteres;
 * se a categoria foi preenchida corretamente;
-* se o tempo de preparo foi informado;
-* se a URL da imagem foi preenchida;
+* se a URL da imagem começa com `http` ou `https`;
 * se os ingredientes foram informados;
 * se o modo de preparo possui uma descrição adequada.
 
@@ -391,6 +376,8 @@ O projeto aplica boas práticas como:
 * consumo de API externa;
 * README com instruções de instalação e execução;
 * código versionado com Git e GitHub.
+
+
 
 ## Conclusão
 
